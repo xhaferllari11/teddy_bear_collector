@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
-{% block content %}
+{% block content%}
 
-<h1>Teddy Bears</h1>
+<h1>{{teddy.name}}'s details</h1>
 
-{% for teddy in teddys %}
 <div class="card">
-    <a href="{% url 'detail' teddy.id %}">
     <div class="card-content">
         <span class="card-title">{{ teddy.name }}</span>
         <p>Breed: {{ teddy.breed }}</p>
         <p>Description: {{ teddy.description }}</p>
         <p>Birth Year: {{ teddy.age }}</p>
     </div>
-    </a>
 </div>
-{% endfor %}
 
-{% endblock%}
+
+
+
+{% endblock %}
