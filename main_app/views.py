@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from . import models
 
 
@@ -17,7 +18,16 @@ def teddys_index(request):
     )
 
 def teddys_detail(request, teddy_id):
-    print(f'ok {models.Teddy.objects.filter(id=teddy_id)}')
     return render(request, 'teddys/detail.html', {'teddy': models.Teddy.objects.get(id=teddy_id)})
 
+class TeddyCreate(CreateView):
+    model = models.Teddy
+    fields = '__all__'
 
+class TeddyUpdate(UpdateView):
+    model = models.Teddy
+    fields = ['breed','description','birth_year']
+
+class TeddyDelete(DeleteView):
+    model = models.Teddy
+    success_url = '/teddys/'

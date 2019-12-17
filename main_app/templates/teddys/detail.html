@@ -10,6 +10,10 @@
         <p>Description: {{ teddy.description }}</p>
         <p>Birth Year: {{ teddy.age }}</p>
     </div>
+    <div class="card-action">
+        <a href="{% url 'teddy_update' teddy.id %}">Edit</a>
+        <a href="{% url 'teddy_delete' teddy.id %}">Delete</a>
+    </div>
 </div>
 
 
