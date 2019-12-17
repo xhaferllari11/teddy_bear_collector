@@ -48,3 +48,18 @@ def add_cleaning(request, teddy_id):
 
 class ClothesList(ListView):
     model = models.Cloth
+
+class ClothesDetail(DetailView):
+    model = models.Cloth
+
+class ClothesUpdate(UpdateView):
+    model = models.Cloth
+    fields = ['item','color']
+
+class ClothesDelete(DeleteView):
+    model = models.Cloth
+    success_url = '/clothes/'
+
+class ClothesCreate(CreateView):
+    model = models.Cloth
+    fields = '__all__'

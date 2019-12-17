@@ -16,6 +16,10 @@ class Cloth(models.Model):
     def __str__(self):
         return f'item: {self.item}'
 
+    def get_absolute_url(self):
+        return reverse('clothes_detail', kwargs={'pk': self.id})
+
+
 class Teddy(models.Model):
     name = models.CharField(max_length=100)
     breed = models.CharField(max_length=100)
