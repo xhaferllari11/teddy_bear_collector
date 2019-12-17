@@ -25,6 +25,7 @@ class Teddy(models.Model):
     breed = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     birth_year = models.IntegerField()
+    clothes = models.ManyToManyField(Cloth)
 
     def __str__(self):
         return f'name: {self.name} id: {self.id}'

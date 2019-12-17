@@ -64,6 +64,50 @@
     </div>
 </div>
 
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ teddy.name }}'s Clothes</h3>
+    {% if teddy.clothes.count %}
+      {% for cloth in teddy.clothes.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ cloth.color }}">{{ cloth.color }}</span> {{ cloth.item }}
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No clothes :(</h5>
+    {% endif %}
+  </div>
+  <!-- Available clothes will come after this line -->
+  <div class="col s6">
+    <h3>Available Clothes</h3>
+    {% if clothes.count %}
+      {% for cloth in clothes.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span style="color: {{ cloth.color }}">{{ cloth.color }}</span> {{ cloth.item }}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_cloth' teddy.id cloth.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{teddy.name}} Already Has All Toys Available</h5>
+    {% endif %}
+</div>
+
+
+
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {

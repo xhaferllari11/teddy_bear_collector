@@ -21,9 +21,12 @@ def teddys_index(request):
 
 def teddys_detail(request, teddy_id):
     teddy = models.Teddy.objects.get(id=teddy_id)
+    clothes_teddy_doesnt_have = models.Cloth.objects.exclude(id__in = teddy.clothes.all().values_list('id'))
+
     return render(request, 'teddys/detail.html', {
         'teddy': teddy,
-        'cleaning_form': CleaningForm
+        'cleaning_form': CleaningForm,
+        'clothes': clothes_teddy_doesnt_have
     })
 
 class TeddyCreate(CreateView):
@@ -63,3 +66,8 @@ class ClothesDelete(DeleteView):
 class ClothesCreate(CreateView):
     model = models.Cloth
     fields = '__all__'
+
+def assoc_cloth(request, teddy_id, cloth_id):
+    teddy = models.Teddy.objects.get(id=teddy_id)
+    teddy.clothes.add(cloth_id)
+    return redirect(teddy)
