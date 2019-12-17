@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from . import models
-
+from .forms import CleaningForm
 
 # Create your views here.
 
@@ -18,7 +18,11 @@ def teddys_index(request):
     )
 
 def teddys_detail(request, teddy_id):
-    return render(request, 'teddys/detail.html', {'teddy': models.Teddy.objects.get(id=teddy_id)})
+    teddy = models.Teddy.objects.get(id=teddy_id)
+    return render(request, 'teddys/detail.html', {
+        'teddy': teddy,
+        'cleaning_form': CleaningForm
+    })
 
 class TeddyCreate(CreateView):
     model = models.Teddy
@@ -31,3 +35,11 @@ class TeddyUpdate(UpdateView):
 class TeddyDelete(DeleteView):
     model = models.Teddy
     success_url = '/teddys/'
+
+def add_cleaning(request, teddy_id):
+    form = CleaningForm(request.POST)
+    if form.is_valid():
+        new_cleaning = form.save(commit=False)
+        new_cleaning.teddy_id = teddy_id
+        new_cleaning.save()
+    return redirect('detail', teddy_id=teddy_id)

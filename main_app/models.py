@@ -33,5 +33,6 @@ class Cleaning(models.Model):
     def __str__(self):
         return f"{self.get_dirt_display()} on {self.date}"
 
+    class Meta:
+        ordering = ['-date']
 
-        
