@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from . import models
 from .forms import CleaningForm
 
@@ -43,3 +45,6 @@ def add_cleaning(request, teddy_id):
         new_cleaning.teddy_id = teddy_id
         new_cleaning.save()
     return redirect('detail', teddy_id=teddy_id)
+
+class ClothesList(ListView):
+    model = models.Cloth

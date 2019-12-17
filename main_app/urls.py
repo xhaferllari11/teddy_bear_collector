@@ -11,4 +11,5 @@ urlpatterns = [
     path('teddys/<int:pk>/update/', views.TeddyUpdate.as_view(), name='teddy_update'),
     path('teddys/<int:pk>/delete/', views.TeddyDelete.as_view(), name='teddy_delete'),
     path('teddys/<int:teddy_id>/add_cleaning', views.add_cleaning, name='add_cleaning'),
+    path('clothes/', views.ClothesList.as_view() , name='clothes_index'),
 ]

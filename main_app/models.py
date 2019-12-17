@@ -9,6 +9,13 @@ DIRTINESS = (
     ('C', 'Clean')
 )
 
+class Cloth(models.Model):
+    item = models.CharField(max_length=50)
+    color = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'item: {self.item}'
+
 class Teddy(models.Model):
     name = models.CharField(max_length=100)
     breed = models.CharField(max_length=100)
