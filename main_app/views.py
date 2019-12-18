@@ -33,7 +33,11 @@ def teddys_detail(request, teddy_id):
 
 class TeddyCreate(CreateView):
     model = models.Teddy
-    fields = '__all__'
+    fields = ['name','breed','description','birth_year']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class TeddyUpdate(UpdateView):
     model = models.Teddy
