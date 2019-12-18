@@ -27,6 +27,7 @@ class Teddy(models.Model):
     description = models.TextField(max_length=250)
     birth_year = models.IntegerField()
     clothes = models.ManyToManyField(Cloth)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'name: {self.name} id: {self.id}'
