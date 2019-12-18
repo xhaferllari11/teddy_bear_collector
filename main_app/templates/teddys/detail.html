@@ -27,10 +27,10 @@
         <span class="card-title">{{ teddy.name }}</span>
         <p>Breed: {{ teddy.breed }}</p>
         <p>Description: {{ teddy.description }}</p>
-        {% if teddy.age > 0 %}
-        <p>Age: {{ teddy.age }}</p>
+        {% if teddy.birth_year > 1990 %}
+        <p>Birth: {{ teddy.birth_year }}</p>
         {% else %}
-        <p>Age: Kitten</p>
+        <p>Birth: Too old</p>
         {% endif %}
       </div>
       <div class="card-action">

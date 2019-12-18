@@ -8,6 +8,9 @@ from . import models
 from .forms import CleaningForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -17,12 +20,14 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def teddys_index(request):
     return render(
         request, 'teddys/index.html',
-        {'teddys': models.Teddy.objects.all()}
+        {'teddys': models.Teddy.objects.filter(user=request.user)}
     )
 
+@login_required
 def teddys_detail(request, teddy_id):
     teddy = models.Teddy.objects.get(id=teddy_id)
     clothes_teddy_doesnt_have = models.Cloth.objects.exclude(id__in = teddy.clothes.all().values_list('id'))
@@ -33,7 +38,7 @@ def teddys_detail(request, teddy_id):
         'clothes': clothes_teddy_doesnt_have
     })
 
-class TeddyCreate(CreateView):
+class TeddyCreate(LoginRequiredMixin, CreateView):
     model = models.Teddy
     fields = ['name','breed','description','birth_year']
 
@@ -41,14 +46,15 @@ class TeddyCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class TeddyUpdate(UpdateView):
+class TeddyUpdate(LoginRequiredMixin, UpdateView):
     model = models.Teddy
     fields = ['breed','description','birth_year']
 
-class TeddyDelete(DeleteView):
+class TeddyDelete(LoginRequiredMixin, DeleteView):
     model = models.Teddy
     success_url = '/teddys/'
 
+@login_required
 def add_cleaning(request, teddy_id):
     form = CleaningForm(request.POST)
     if form.is_valid():
@@ -57,29 +63,31 @@ def add_cleaning(request, teddy_id):
         new_cleaning.save()
     return redirect('detail', teddy_id=teddy_id)
 
-class ClothesList(ListView):
+class ClothesList(LoginRequiredMixin, ListView):
     model = models.Cloth
 
-class ClothesDetail(DetailView):
+class ClothesDetail(LoginRequiredMixin, DetailView):
     model = models.Cloth
 
-class ClothesUpdate(UpdateView):
+class ClothesUpdate(LoginRequiredMixin, UpdateView):
     model = models.Cloth
     fields = ['item','color']
 
-class ClothesDelete(DeleteView):
+class ClothesDelete(LoginRequiredMixin, DeleteView):
     model = models.Cloth
     success_url = '/clothes/'
 
-class ClothesCreate(CreateView):
+class ClothesCreate(LoginRequiredMixin, CreateView):
     model = models.Cloth
     fields = '__all__'
 
+@login_required
 def assoc_cloth(request, teddy_id, cloth_id):
     teddy = models.Teddy.objects.get(id=teddy_id)
     teddy.clothes.add(cloth_id)
     return redirect(teddy)
 
+@login_required
 def add_photo(request, teddy_id):
     S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
     BUCKET = 'teddycollector-alban'
