@@ -17,4 +17,5 @@ urlpatterns = [
     path('clothes/create/', views.ClothesCreate.as_view() , name='clothes_create'),
     path('clothes/<int:pk>/update', views.ClothesUpdate.as_view() , name='clothes_update'),
     path('clothes/<int:pk>/delete', views.ClothesDelete.as_view() , name='clothes_delete'),
+    path('teddys/<int:teddy_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
