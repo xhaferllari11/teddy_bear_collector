@@ -12,8 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# Create your views here.
-
 def home(request):
     return render(request, 'home.html')
 
@@ -106,6 +104,7 @@ def add_photo(request, teddy_id):
             photo = models.Photo(url=url, teddy_id=teddy_id)
             photo.save()
         except:
+            # development only
             print('An error occurred uploading file to S3')
     return redirect('detail', teddy_id=teddy_id)
 
