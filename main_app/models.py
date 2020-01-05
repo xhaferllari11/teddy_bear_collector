@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 DIRTINESS = (
-    ('D', 'Diry'),
+    ('D', 'Dirty'),
     ('S', 'Somewhat Dirty'),
     ('C', 'Clean')
 )
@@ -19,7 +19,6 @@ class Cloth(models.Model):
 
     def get_absolute_url(self):
         return reverse('clothes_detail', kwargs={'pk': self.id})
-
 
 class Teddy(models.Model):
     name = models.CharField(max_length=100)
